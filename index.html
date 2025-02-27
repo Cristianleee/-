@@ -1,0 +1,364 @@
+<!doctype html>
+
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Дао как феномен китайской философии и культуры</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <!-- Подключаем Reveal.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/moon.min.css">
+  <style>
+    :root {
+      --main-font: 'ZCOOL XiaoWei', serif;
+      --heading-font: 'Ma Shan Zheng', cursive;
+    }
+    
+    .reveal { font-family: var(--main-font); }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: var(--heading-font);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    .reveal p, .reveal li {
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+    
+    /* Улучшенный эффект лепестков сакуры */
+    .sakura-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+    
+    .petal {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0;
+      animation: fall cubic-bezier(0.25, 0.1, 0.25, 1) infinite, 
+                 sway cubic-bezier(0.42, 0, 0.58, 1) infinite, 
+                 rotate cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    }
+    
+    /* Более реалистичные формы лепестков сакуры */
+    .petal1 { 
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10C60 25 80 30 90 50C80 70 60 75 50 90C40 75 20 70 10 50C20 30 40 25 50 10Z' fill='%23ffd7e7'/%3E%3Cpath d='M50 10C55 25 75 30 90 50C75 70 55 75 50 90' fill='none' stroke='%23ffb7d0' stroke-width='1' opacity='0.7'/%3E%3C/svg%3E");
+    }
+    .petal2 { 
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5C65 20 85 30 95 50C85 70 65 80 50 95C35 80 15 70 5 50C15 30 35 20 50 5Z' fill='%23ffe1ee'/%3E%3Cpath d='M50 5C60 20 80 30 95 50C80 70 60 80 50 95' fill='none' stroke='%23ffcce1' stroke-width='1' opacity='0.7'/%3E%3C/svg%3E");
+    }
+    .petal3 { 
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 15C62 25 82 35 85 55C82 75 62 85 50 95C38 85 18 75 15 55C18 35 38 25 50 15Z' fill='%23ffc6df'/%3E%3Cpath d='M50 15C58 25 78 35 85 55C78 75 58 85 50 95' fill='none' stroke='%23ffaccd' stroke-width='1' opacity='0.7'/%3E%3C/svg%3E");
+    }
+    
+    @keyframes fall {
+      0% { top: -50px; opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.6; }
+      100% { top: 100vh; opacity: 0; }
+    }
+    
+    @keyframes sway {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(20px); }
+      50% { transform: translateX(0); }
+      75% { transform: translateX(-20px); }
+      100% { transform: translateX(0); }
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      33% { transform: rotate(120deg); }
+      66% { transform: rotate(240deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Ветки сакуры по углам */
+    .sakura-branch {
+      position: fixed;
+      width: 250px;
+      height: 250px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 999;
+    }
+    
+    .branch-top-right {
+      top: 0;
+      right: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M200 0 C180 10 170 20 160 40 C150 60 145 70 140 90' stroke='%23754c28' stroke-width='3' fill='none'/%3E%3Ccircle cx='140' cy='90' r='12' fill='%23ffd7e7'/%3E%3Ccircle cx='150' cy='80' r='10' fill='%23ffc6df'/%3E%3Ccircle cx='160' cy='60' r='11' fill='%23ffe1ee'/%3E%3Ccircle cx='155' cy='65' r='9' fill='%23ffd7e7'/%3E%3Ccircle cx='135' cy='95' r='8' fill='%23ffc6df'/%3E%3C/svg%3E");
+      transform-origin: top right;
+      animation: gentle-sway 7s ease-in-out infinite;
+    }
+    
+    .branch-bottom-left {
+      bottom: 0;
+      left: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M0 200 C10 180 20 170 40 160 C60 150 70 145 90 140' stroke='%23754c28' stroke-width='3' fill='none'/%3E%3Ccircle cx='90' cy='140' r='12' fill='%23ffd7e7'/%3E%3Ccircle cx='80' cy='150' r='10' fill='%23ffc6df'/%3E%3Ccircle cx='60' cy='160' r='11' fill='%23ffe1ee'/%3E%3Ccircle cx='65' cy='155' r='9' fill='%23ffd7e7'/%3E%3Ccircle cx='95' cy='135' r='8' fill='%23ffc6df'/%3E%3C/svg%3E");
+      transform-origin: bottom left;
+      animation: gentle-sway 8s ease-in-out infinite;
+    }
+    
+    @keyframes gentle-sway {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-2deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Улучшенный эффект чернил */
+    .ink-splash {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0) 100%);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    /* Анимация слайдов */
+    .animate-in { animation: fadeIn 0.8s cubic-bezier(0.42, 0, 0.58, 1); }
+    
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    /* Фон слайдов */
+    section.has-bg { position: relative; }
+    section.has-bg:before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.5;
+      filter: blur(2px);
+      z-index: -1;
+    }
+    
+    /* Улучшенная анимация инь-ян символа */
+    .yin-yang-container {
+      display: inline-block;
+      margin: 20px auto;
+    }
+    
+    .yin-yang {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: 
+        linear-gradient(to right, white 50%, black 50%);
+      position: relative;
+      margin: 0 auto;
+      animation: spin 15s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    
+    .yin-yang:before,
+    .yin-yang:after {
+      content: "";
+      position: absolute;
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+    }
+    
+    .yin-yang:before {
+      top: 0;
+      left: 37.5px;
+      background: black;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    .yin-yang:after {
+      bottom: 0;
+      left: 37.5px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .yin-yang-dot-black,
+    .yin-yang-dot-white {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    
+    .yin-yang-dot-black {
+      background: black;
+      top: 25px;
+      left: 62.5px;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+    
+    .yin-yang-dot-white {
+      background: white;
+      bottom: 25px;
+      left: 62.5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    @keyframes spin { 
+      from { transform: rotate(0deg); } 
+      to { transform: rotate(360deg); } 
+    }
+    
+    .highlight {
+      color: #f9a;
+      text-shadow: 0 0 15px rgba(255, 200, 200, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="sakura-container"></div>
+  <div class="sakura-branch branch-top-right"></div>
+  <div class="sakura-branch branch-bottom-left"></div>
+
+  <div class="reveal">
+    <div class="slides">
+      <section data-transition="zoom" class="has-bg">
+        <h1>Дао <span class="highlight">道</span></h1>
+        <h3>как феномен китайской философии и культуры</h3>
+        <p>Выступление: [Муроталиев С.З. Ткачева Е.В.]</p>
+      </section>
+
+      <section data-transition="fade">
+        <h2>Введение в Дао</h2>
+        <blockquote>«Дао, которое может быть выражено словами, не есть постоянное Дао»</blockquote>
+        <ul>
+          <li>Центральное понятие в китайской философии</li>
+          <li>Космический принцип и естественный путь</li>
+        </ul>
+      </section>
+      
+      <section data-transition="convex">
+        <h2>Фундаментальная идея <span class="highlight">Дао</span></h2>
+        <div class="yin-yang-container">
+          <div class="yin-yang">
+            <div class="yin-yang-dot-black"></div>
+            <div class="yin-yang-dot-white"></div>
+          </div>
+        </div>
+        <ul>
+          <li>Единство противоположностей</li>
+          <li>Естественный порядок вещей</li>
+        </ul>
+      </section>
+      
+      <section data-transition="flip">
+        <h2>Принцип <span class="highlight">у-вэй</span> (недеяние)</h2>
+        <ul>
+          <li>Следование естественному потоку</li>
+          <li>Действие без принуждения</li>
+        </ul>
+      </section>
+
+      <section data-transition="zoom">
+        <h2>Современное значение Дао</h2>
+        <ul>
+          <li>Экология и гармония с природой</li>
+          <li>Психология и самосовершенствование</li>
+        </ul>
+      </section>
+      
+      <section data-transition="fade">
+        <h2>спасибо за внимание</h2>
+        <div class="yin-yang-container" style="transform: scale(0.7);">
+          <div class="yin-yang">
+            <div class="yin-yang-dot-black"></div>
+            <div class="yin-yang-dot-white"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'fade',
+      plugins: []
+    });
+
+    // Эффект чернил при смене слайда
+    Reveal.on('slidechanged', function(event) {
+      let splash = document.createElement('div');
+      splash.className = 'ink-splash';
+      document.body.appendChild(splash);
+      
+      setTimeout(() => {
+        splash.style.width = '200vw';
+        splash.style.height = '200vw';
+        splash.style.opacity = '0.12';
+        splash.style.transition = 'all 1.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        
+        setTimeout(() => splash.remove(), 1800);
+      }, 0);
+      
+      event.currentSlide.classList.add('animate-in');
+    });
+
+    // Создание лепестков сакуры с разными типами
+    function createPetals() {
+      const container = document.querySelector('.sakura-container');
+      const petalTypes = ['petal1', 'petal2', 'petal3'];
+      
+
+      // Создание новых лепестков
+      for (let i = 0; i < 30; i++) {
+        let petal = document.createElement('div');
+        petal.className = `petal ${petalTypes[Math.floor(Math.random() * petalTypes.length)]}`;
+        
+        // Случайное начальное положение
+        petal.style.left = `${Math.random() * 100}vw`;
+        
+        // Случайный размер (более естественный диапазон)
+        const size = 8 + Math.random() * 12;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size}px`;
+        
+        // Более плавные параметры анимации с разной длительностью для естественности
+        const fallDuration = 8 + Math.random() * 12;
+        const swayDuration = 3 + Math.random() * 5;
+        const rotateDuration = 5 + Math.random() * 8;
+        petal.style.animationDuration = `${fallDuration}s, ${swayDuration}s, ${rotateDuration}s`;
+        
+        // Разный задержка начала анимации для каждого лепестка
+        petal.style.animationDelay = `${Math.random() * 10}s`;
+        
+        container.appendChild(petal);
+      }
+    }
+    
+    // Создаем начальные лепестки
+    createPetals();
+    
+    // Периодически обновляем лепестки
+    setInterval(createPetals, 15000);
+  </script>
+</body>
+</html>
